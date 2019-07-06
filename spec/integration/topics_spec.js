@@ -81,7 +81,7 @@ describe("routes : topics", () => {
       });
     });
   });
-  describe("POST /topics/:id/destroy", () => {  
+  describe("POST /topics/:id/destroy", () => {
     it("should delete the topic with the associated ID", (done) => {
       Topic.all()
         .then((topics) => {
@@ -93,9 +93,42 @@ describe("routes : topics", () => {
                 expect(err).toBeNull();
                 expect(topics.length).toBe(topicCountBeforeDelete - 1);
                 done();
-              })
-
+              });
           });
+        });
+    });
+  });
+  describe("GET /topics/:id/edit", () => {
+    it("should render a view with an edit topic form", (done) => {
+      request.get(`${base}${this.topic.id}/edit`, (err, res, body) => {
+        expect(err).toBeNull();
+        expect(body).toContain("Edit Topic");
+        expect(body).toContain("JS Frameworks");
+        done();
+      });
+    });
+  });
+  describe("POST /topics/:id/update", () => {
+    it("should update the topic with the given values", (done) => {
+      const options = {
+        url: `${base}${this.topic.id}/update`,
+        form: {
+          title: "JavaScript Frameworks",
+          description: "There are a lot of them"
+        }
+      };
+      request.post(options,
+        (err, res, body) => {
+          expect(err).toBeNull();
+          Topic.findOne({
+              where: {
+                id: this.topic.id
+              }
+            })
+            .then((topic) => {
+              expect(topic.title).toBe("JavaScript Frameworks");
+              done();
+            });
         });
     });
   });
