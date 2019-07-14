@@ -15,6 +15,11 @@
 <!-- #2 -->
           <li class="list-group-item">
             <a href="/topics/<%= topic.id %>"> <%= topic.title %> </a>
+            <% topic.flairs.forEach((flair) => { %>
+              <a href="/topics/<%= topic.id %>/flairs/<%= flair.id %>/edit/">
+                <small style="background:<%= flair.color %>; padding:0 25px; margin: 0 5px"> <%= flair.name %> </small>
+              </a>
+            <% }) %>
           </li>
         <% }) %>
       </ul>

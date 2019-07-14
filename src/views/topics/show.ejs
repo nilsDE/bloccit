@@ -10,11 +10,16 @@
 
   <main class="container">
     <h1><%= topic.title %></h1>
+    <% topic.flairs.forEach((flair) => { %>
+      <a href="/topics/<%= topic.id %>/flairs/<%= flair.id %>/edit/">
+      <small style="background:<%= flair.color %>; padding:0 25px; display: inline-block; margin: 0 5px 15px 5px"><%= flair.name %></small></a><br>
+    <% }) %>
     <a href="/topics/<%= topic.id %>/edit" class="btn btn-warning">Edit</a>
     <a href="/topics/<%= topic.id %>/posts/new" class="btn btn-success">New Post</a>
     <form style="display:initial" action="/topics/<%= topic.id %>/destroy" method="post">
       <button type="submit" class="btn btn-danger">Delete</button>
     </form>
+    <a href="/topics/<%= topic.id %>/flairs/new" class="btn btn-info">New Flair</a>
     <p><%= topic.description %></p>
     <hr>
     <h1>Posts</h1>
