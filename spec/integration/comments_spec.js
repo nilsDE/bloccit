@@ -203,4 +203,52 @@ describe("routes : comments", () => {
       });
     });
   }); //end context for signed in user
+
+  describe("POST /topics/:topicId/posts/:postId/comments/:id/destroy", () => {
+    it("should not delete the comment created by another user with the associated ID", (done) => {
+
+      User.create({
+          email: "guy@test.com",
+          password: "876543"
+        })
+        .then((user) => {
+          this.comment;
+          Comment.create({
+              body: "ay caramba!!!!!",
+              userId: user.id,
+              postId: this.topic.posts[0].id
+            })
+            .then((comment) => {
+              this.comment = comment;
+              done();
+            })
+            .catch((err) => {
+              console.log(err);
+              done();
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+          done();
+        });
+        Comment.findAll()
+          .then((comments) => {
+            const commentCountBeforeDelete = comments.length;
+            expect(commentCountBeforeDelete).toBe(1);
+            request.post(
+              `${base}${this.topic.id}/posts/${this.post.id}/comments/${this.comment.id}/destroy`,
+              (err, res, body) => {
+                console.log(err, res.statusCode)
+                expect(res.statusCode).toBe(401);
+                Comment.findAll()
+                  .then((comments) => {
+                    // expect(err).toBeNull();
+                    console.log(err)
+                    expect(comments.length).toBe(commentCountBeforeDelete);
+                    done();
+                  });
+              });
+          });
+    });
+  });
 });
