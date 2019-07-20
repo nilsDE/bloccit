@@ -267,7 +267,6 @@ describe("routes : comments", () => {
       it("should  delete the comment created by another user with the associated ID", (done) => {
         Comment.findAll()
           .then((comments) => {
-            console.log(comments)
             const commentCountBeforeDelete = comments.length;
             expect(commentCountBeforeDelete).toBe(1);
             request.post(
@@ -276,7 +275,6 @@ describe("routes : comments", () => {
                 expect(res.statusCode).toBe(302);
                 Comment.findAll()
                   .then((comments) => {
-                    console.log(comments)
                     expect(comments.length).toBe(commentCountBeforeDelete - 1);
                     done();
                   });
@@ -285,5 +283,4 @@ describe("routes : comments", () => {
       });
     });
   });
-
 });
