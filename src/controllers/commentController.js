@@ -35,7 +35,6 @@
      commentQueries.deleteComment(req, (err, comment) => {
        if (err) {
          res.redirect(err, req.headers.referer);
-         console.log(err, req.headers.referer)
        } else {
          res.redirect(req.headers.referer);
        }

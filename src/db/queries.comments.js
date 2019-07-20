@@ -22,7 +22,6 @@ module.exports = {
     return Comment.findById(req.params.id)
       .then((comment) => {
         const authorized = new Authorizer(req.user, comment).destroy();
-
         if (authorized) {
           comment.destroy();
           callback(null, comment);
