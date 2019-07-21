@@ -5,13 +5,14 @@
   "main": "src/server.js",
   "scripts": {
     "test": "set NODE_ENV=test&& jasmine",
-    "start": "node src/server.js"
+    "start": "nodemon src/server.js"
   },
   "author": "Nils Rohe",
   "license": "ISC",
   "devDependencies": {
     "faker": "^4.1.0",
     "jasmine": "^3.0.0",
+    "nodemon": "^1.19.1",
     "request": "^2.83.0"
   },
   "dependencies": {
