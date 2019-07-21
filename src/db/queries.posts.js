@@ -1,12 +1,8 @@
 const Post = require("./models").Post;
 const Topic = require("./models").Topic;
-<<<<<<< HEAD
 const Comment = require("./models").Comment;
 const User = require("./models").User;
-||||||| merged common ancestors
-=======
 const Authorizer = require("../policies/post");
->>>>>>> assignment-authorization
 
 module.exports = {
   addPost(newPost, callback) {

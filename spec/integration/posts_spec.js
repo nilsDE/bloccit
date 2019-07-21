@@ -68,7 +68,18 @@ describe("routes : posts", () => {
   });
 
   describe("guest user performing CRUD actions for Post", () => {
- 
+    beforeEach(done => {
+    request.get({         // mock authentication
+      url: "http://localhost:3000/auth/fake",
+      form: {     // mock authenticate as `role` user
+        userId: 0
+      }
+    },
+      (err, res, body) => {
+        done();
+      }
+    );  
+  });
   describe("GET /topics/:topicId/posts/new", () => {
     it("should not render a new post form", (done) => {
       request.get(`${base}/${this.topic.id}/posts/new`, (err, res, body) => {
