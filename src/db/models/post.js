@@ -45,6 +45,13 @@ module.exports = (sequelize, DataTypes) => {
         postId: post.id
       });
     });
+    Post.afterCreate((post, callback) => {
+      return models.Vote.create({
+        userId: post.userId,
+        postId: post.id,
+        value: 1
+      });
+    });
   };
   Post.prototype.getPoints = function () {
     if (this.votes.length === 0) return 0;
@@ -59,5 +66,14 @@ module.exports = (sequelize, DataTypes) => {
   Post.prototype.getFavoriteFor = function(userId){
     return this.favorites.find((favorite) => { return favorite.userId == userId });
   };
+  Post.addScope("lastFiveFor", (userId) => {
+    // #2
+        return {
+          where: { userId: userId},
+    // #3
+          limit: 5,
+          order: [["createdAt", "DESC"]]
+        };
+      });
   return Post;
 };

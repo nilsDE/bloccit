@@ -66,6 +66,10 @@ describe("routes : votes", () => {
     });
     describe("GET /topics/:topicId/posts/:postId/votes/upvote", () => {
       it("should not create a new vote", (done) => {
+        Vote.destroy({
+          where: {},
+          truncate: true
+        });
         const options = {
           url: `${base}${this.topic.id}/posts/${this.post.id}/votes/upvote`
         };
@@ -90,8 +94,7 @@ describe("routes : votes", () => {
       });
     });
   });
-  describe("guest attempting to vote on a post", () => {
-  });
+  
   describe("signed in user voting on a post", () => {
     beforeEach((done) => { // before each suite in this context
       request.get({ // mock authentication
